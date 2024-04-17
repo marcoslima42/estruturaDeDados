@@ -22,9 +22,18 @@ struct partida{
 };
 typedef struct partida Partida;
 
+struct empate{
+    int saldo_gols;
+    int gols_aFavor;
+    int maiorContinenteI;
+};
+typedef struct empate Empate;
+
+
 void ReceberTimes(Time VetorTimes[], int tamanho){
     for(int i=0; i<tamanho; i++){
         //gets(VetorTimes[i].letra); //verificar se o 'gets' pode ser usado para o input de um char de uma posicao
+        //
         fflush(stdin);
         VetorTimes[i].letra = getchar();
         fflush(stdin);
@@ -34,9 +43,7 @@ void ReceberTimes(Time VetorTimes[], int tamanho){
 }
 
 void ReceberPartidas(Partida VetorPartidas[], int tam_part, Time VetorTimes[], int tam_times){
-    //int partida=0;
     char letraTime1, letraTime2;
-    //scanf("%d", &partida);
     for(int i=0; i<tam_part; i++){
         scanf("%d", &VetorPartidas[i].codigo);
         //gets(VetorPartidas[i].time1);
@@ -57,10 +64,6 @@ void ReceberPartidas(Partida VetorPartidas[], int tam_part, Time VetorTimes[], i
                 VetorTimes[j].gols_aFavor+=VetorPartidas[i].gols_time1;
                 //gols contra
                 VetorTimes[j].gols_contra+=VetorPartidas[i].gols_time2;
-                //saldo de gols
-                saldoGols=VetorTimes[j].gols_aFavor-VetorTimes[j].gols_contra;
-                VetorTimes[j].saldo_gols+=saldoGols; 
-                VetorTimes[j].qtd_partidas++;
             }
             //time2
             int saldoGols2=0;
@@ -69,10 +72,6 @@ void ReceberPartidas(Partida VetorPartidas[], int tam_part, Time VetorTimes[], i
                 VetorTimes[j].gols_aFavor+=VetorPartidas[i].gols_time2;
                 //gols contra
                 VetorTimes[j].gols_contra+=VetorPartidas[i].gols_time1;
-                //saldo de gols
-                saldoGols2=VetorTimes[j].gols_aFavor-VetorTimes[j].gols_contra;
-                VetorTimes[j].saldo_gols+=saldoGols2; 
-                VetorTimes[j].qtd_partidas++;
             }
         }
     }
@@ -105,14 +104,56 @@ Time PiorSaldoGols(Time VetorTimes[], int tamanho){
 Time MelhorClassificadoContinente(Partida VetorPartidas[], int tam_part, Time VetorTimes[], int tam_times, int continente){
     int maior=0;
     int maiorContinenteI=0;
-    int empate[tam_times];//pq nao consigo criar vetor com a variavel [tam_times]?
+    int qtdEmpate=0, teveEmpate1=0, teveEmpate2=0;
+    Empate *VetorEmpate;
+    int j=0;
+    VetorEmpate=(Empate*)malloc(tam_part*sizeof(Empate));
+    //int empate[tam_times];//pq nao consigo criar vetor com a variavel [tam_times]?
 
+    //encontrar o maior
     for(int i=0; i<tam_times; i++){
         if(VetorTimes[i].continente==continente && VetorTimes[i].qtd_partidas>maior){
             maior=VetorTimes[i].qtd_partidas;
             maiorContinenteI=i;
+            VetorEmpate[j].saldo_gols=VetorTimes[i].saldo_gols;
+            VetorEmpate[j].gols_aFavor=VetorTimes[i].gols_aFavor;
+            VetorEmpate[j].maiorContinenteI=i;
+            j++;
         }
     }
+
+    //encontrar empate 1
+    for(int i=0; i<tam_times; i++)
+        if(maior==VetorTimes[i].qtd_partidas && VetorTimes[i].continente==continente)
+            teveEmpate1=1;
+    
+    //encontrar empate 2
+
+    for(int k=0; k<j-1; k++){
+        if(VetorEmpate[k].saldo_gols==VetorEmpate[k+1].saldo_gols)
+            teveEmpate2=1;
+    }
+    int mSaldo_gols=VetorEmpate[0].saldo_gols, mGols_afavor=VetorEmpate[0].gols_aFavor;
+    if(teveEmpate1!=0 && teveEmpate2==0){
+        for(int i=0; i<j-1; i++){
+            if(VetorEmpate[i].saldo_gols>VetorEmpate[i+1].saldo_gols){
+                maiorContinenteI=VetorEmpate[i].maiorContinenteI;
+            }
+            else if(VetorEmpate[j-1].saldo_gols>VetorEmpate[j-2].saldo_gols)
+                maiorContinenteI=VetorEmpate[j-1].maiorContinenteI;
+        }
+    }
+    else{
+        for(int i=0; i<j-1; i++){
+            if(VetorEmpate[i].gols_aFavor>VetorEmpate[i+1].gols_aFavor)
+                maiorContinenteI=VetorEmpate[i].maiorContinenteI;
+            else if(VetorEmpate[j-1].gols_aFavor>VetorEmpate[j-2].gols_aFavor)
+                maiorContinenteI=VetorEmpate[j-1].maiorContinenteI;
+        }
+    }
+    
+    free(VetorEmpate);
+
     return VetorTimes[maiorContinenteI];
 }
 
@@ -124,6 +165,12 @@ int main(){
     VetorTimes=(Time *)malloc(tam*sizeof(Time));
     ReceberTimes(VetorTimes, tam);
 
+    for(int i=0; i<tam; i++){
+        VetorTimes[i].saldo_gols=0;
+        VetorTimes[i].gols_aFavor=0;
+        VetorTimes[i].gols_contra=0;
+    }
+
     //apos alocacao e preenchimento do VetorTime, receber partidas
     //antes, alocar o vetor de partidas que sempre sera "m-1"
     Partida *VetorPartidas; 
@@ -131,7 +178,11 @@ int main(){
     scanf("%d", &tamPartidas);
     VetorPartidas=(Partida *)malloc(tamPartidas*sizeof(Partida));
     ReceberPartidas(VetorPartidas, tamPartidas, VetorTimes, tam);
-
+    
+    //processar gols a favor
+    for(int i=0; i<tam; i++){
+        VetorTimes[i].saldo_gols=VetorTimes[i].gols_aFavor-VetorTimes[i].gols_contra;
+    }
     Time melhorSaldoGols;
     Time piorSaldoGols;
 
