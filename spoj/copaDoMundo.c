@@ -33,8 +33,10 @@ typedef struct empate Empate;
 void ReceberTimes(Time VetorTimes[], int tamanho){
     for(int i=0; i<tamanho; i++){
         //gets(VetorTimes[i].letra); //verificar se o 'gets' pode ser usado para o input de um char de uma posicao
-        VetorTimes[i].letra = getchar();
-        gets(VetorTimes[i].nome);
+        //VetorTimes[i].letra = getchar();
+        scanf(" %c ", &VetorTimes[i].letra);
+        //gets(VetorTimes[i].nome);
+        fgets(VetorTimes[i].nome, 30, stdin);
         scanf("%d", &VetorTimes[i].continente);
     }
 }
@@ -44,9 +46,11 @@ void ReceberPartidas(Partida VetorPartidas[], int tam_part, Time VetorTimes[], i
     for(int i=0; i<tam_part; i++){
         scanf("%d", &VetorPartidas[i].codigo);
         //gets(VetorPartidas[i].time1);
-        VetorPartidas[i].time1=getchar();
+        //VetorPartidas[i].time1=getchar();
+        scanf(" %c ", &VetorPartidas[i].time1);
         //gets(VetorPartidas[i].time2);
-        VetorPartidas[i].time2=getchar();
+        //VetorPartidas[i].time2=getchar();
+        scanf(" %c ",&VetorPartidas[i].time2);
         scanf("%d", &VetorPartidas[i].gols_time1);
         scanf("%d", &VetorPartidas[i].gols_time2);
         
