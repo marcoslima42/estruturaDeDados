@@ -34,9 +34,9 @@ void ReceberTimes(Time VetorTimes[], int tamanho){
 }
 
 void ReceberPartidas(Partida VetorPartidas[], int tam_part, Time VetorTimes[], int tam_times){
-    int partida=0;
+    //int partida=0;
     char letraTime1, letraTime2;
-    scanf("%d", &partida);
+    //scanf("%d", &partida);
     for(int i=0; i<tam_part; i++){
         scanf("%d", &VetorPartidas[i].codigo);
         //gets(VetorPartidas[i].time1);
