@@ -25,7 +25,7 @@ typedef struct partida Partida;
 struct empate{
     int saldo_gols;
     int gols_aFavor;
-    int maiorContinenteI;
+    int MaiorContinenteIEmpate;
 };
 typedef struct empate Empate;
 
@@ -109,14 +109,19 @@ Time MelhorClassificadoContinente(Partida VetorPartidas[], int tam_part, Time Ve
     VetorEmpate=(Empate*)malloc(tam_part*sizeof(Empate));
     //int empate[tam_times];//pq nao consigo criar vetor com a variavel [tam_times]?
 
+    for(int i=0; i<tam_part; i++){
+        VetorEmpate[i].gols_aFavor=0;
+        VetorEmpate[i].MaiorContinenteIEmpate=0;
+        VetorEmpate[i].saldo_gols=0;
+    }
     //encontrar o maior
     for(int i=0; i<tam_times; i++){
-        if(VetorTimes[i].continente==continente && VetorTimes[i].qtd_partidas>maior){
+        if(VetorTimes[i].continente==continente){
             maior=VetorTimes[i].qtd_partidas;
             maiorContinenteI=i;
             VetorEmpate[j].saldo_gols=VetorTimes[i].saldo_gols;
             VetorEmpate[j].gols_aFavor=VetorTimes[i].gols_aFavor;
-            VetorEmpate[j].maiorContinenteI=i;
+            VetorEmpate[j].MaiorContinenteIEmpate=i;
             j++;
         }
     }
@@ -136,18 +141,18 @@ Time MelhorClassificadoContinente(Partida VetorPartidas[], int tam_part, Time Ve
     if(teveEmpate1!=0 && teveEmpate2==0){
         for(int i=0; i<j-1; i++){
             if(VetorEmpate[i].saldo_gols>VetorEmpate[i+1].saldo_gols){
-                maiorContinenteI=VetorEmpate[i].maiorContinenteI;
+                maiorContinenteI=VetorEmpate[i].MaiorContinenteIEmpate;
             }
             else if(VetorEmpate[j-1].saldo_gols>VetorEmpate[j-2].saldo_gols)
-                maiorContinenteI=VetorEmpate[j-1].maiorContinenteI;
+                maiorContinenteI=VetorEmpate[j-1].MaiorContinenteIEmpate;
         }
     }
     else{
         for(int i=0; i<j-1; i++){
             if(VetorEmpate[i].gols_aFavor>VetorEmpate[i+1].gols_aFavor)
-                maiorContinenteI=VetorEmpate[i].maiorContinenteI;
+                maiorContinenteI=VetorEmpate[i].MaiorContinenteIEmpate;
             else if(VetorEmpate[j-1].gols_aFavor>VetorEmpate[j-2].gols_aFavor)
-                maiorContinenteI=VetorEmpate[j-1].maiorContinenteI;
+                maiorContinenteI=VetorEmpate[j-1].MaiorContinenteIEmpate;
         }
     }
     
