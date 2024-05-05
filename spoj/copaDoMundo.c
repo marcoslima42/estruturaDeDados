@@ -116,7 +116,7 @@ Time MelhorClassificadoContinente(Partida VetorPartidas[], int tam_part, Time Ve
     }
     //encontrar o maior
     for(int i=0; i<tam_times; i++){
-        if(VetorTimes[i].continente==continente){
+        if(VetorTimes[i].continente==continente){ //VetorTimes[i].qtd_partidas>maior
             maior=VetorTimes[i].qtd_partidas;
             maiorContinenteI=i;
             VetorEmpate[j].saldo_gols=VetorTimes[i].saldo_gols;
