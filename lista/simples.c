@@ -98,17 +98,43 @@ void destruirLista(No* l){
     mostrarLista(l);
 }
 
+int qtdNo(No *l){
+    int qtd=0;
+    No *aux=l;
+    while(aux!=NULL){
+        qtd++;
+        aux=aux->prox;
+    }
+    return qtd; 
+}
+
 No* reverseDuasListas(No *l){
-    No *l2, *aux=l;
+    No *aux=l;
+    No *l2=NULL;
 
     while(aux!=NULL){
-        insereNoInicio(l2, aux->valor);
+        l2=insereNoInicio(l2, aux->valor);
         aux=aux->prox;
     }
 
     return l2;
 }
+/*
+No* reverseListaOriginal(No *l){
+    No *aux=l;
+    int qtd;
 
+    qtd=qtdNo(l);
+
+    printf("\n\n%d e quantidade", qtd);
+    while(aux!=NULL){
+        l2=insereNoInicio(l2, aux->valor);
+        aux=aux->prox;
+    }
+    
+    return l;
+}
+*/
 int main(){
     No *l=NULL;
     l= criaNo(8);
@@ -123,15 +149,21 @@ int main(){
 
     if(maximum(l)==NULL) printf("\nNao ha numero maximo, todos elementos da lista sao iguais");
     else printf("\n\nmaior: %d", maximum(l)->valor);
-    getch();
     
-    
-    No *l2=NULL; 
-    
-    reverseDuasListas(l2);
+    No *l2=NULL;
+    l2=reverseDuasListas(l);
+    printf("\n\nMostrar lista reverse\n");
     mostrarLista(l2);
     
+    int qtd=0;
+    qtd=qtdNo(l);
+    printf("\n%d e a quantidade de elementos", qtd);
 
-    //destruirLista(l);
+    destruirLista(l);
+    printf("\nLista1...");
+    destruirLista(l2);
+    printf("\nLista2...");
+
+    
     return 0;
 }
