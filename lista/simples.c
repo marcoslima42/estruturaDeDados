@@ -8,6 +8,53 @@ struct no{
 };
 typedef struct no No;
 
+No* criaNo(int valor);
+No* insereNoInicio(No *l, int valor);
+No* insereNoFim(No *l, int valor);
+void mostrarLista(No *l);
+int eIgual(No* l);
+No* minimum(No* l);
+No* maximum(No* l);
+void destruirLista(No* l);
+int qtdNo(No *l);
+No* reverseDuasListas(No *l);
+No* removerNo(No *l, int valor);
+
+int main(){
+    No *l=NULL;
+    l= criaNo(8);
+
+    l=insereNoFim(l,4);
+    l=insereNoFim(l,6);
+    l=insereNoFim(l,9);
+
+    // mostrarLista(l);
+    // if(minimum(l)==NULL) printf("\nNao ha numero minimo, todos elementos da lista sao iguais");
+    // else printf("\n\nmenor: %d", minimum(l)->valor);
+
+    // if(maximum(l)==NULL) printf("\nNao ha numero maximo, todos elementos da lista sao iguais");
+    // else printf("\n\nmaior: %d", maximum(l)->valor);
+    
+    // No *l2=NULL;
+    // l2=reverseDuasListas(l);
+    // printf("\n\nMostrar lista reverse\n");
+    // mostrarLista(l2);
+    No* aux=NULL;
+    mostrarLista(l);
+    aux=removerNo(l, 4);
+    printf("no removido %d", aux->valor);
+    free(aux);
+    
+    printf("\n");
+    mostrarLista(l);
+    destruirLista(l);
+    //printf("\nLista1...");
+    // destruirLista(l2);
+    // printf("\nLista2...");
+
+    
+    return 0;
+}
 
 No* criaNo(int valor){
     No *novo=NULL;
@@ -31,13 +78,25 @@ No* insereNoInicio(No *l, int valor){
 
 }
 
-void mostrarLista(No *l){
+No* insereNoFim(No *l, int valor){
+    No* aux=l;
+    if(l==NULL)
+        l=criaNo(valor);
+    else{
+        while(aux!=NULL)
+            aux=aux->prox;
+        aux->prox=criaNo(valor);
+    }
+    
+    return l;
+}
+
+void mostrarLista(No* l){
     No *aux=l; 
 
     while(aux != NULL){
         printf("%d ", aux->valor);
         aux=aux->prox;
-        //getch();
     }
 }
 
@@ -119,51 +178,17 @@ No* reverseDuasListas(No *l){
 
     return l2;
 }
-/*
-No* reverseListaOriginal(No *l){
-    No *aux=l;
-    int qtd;
 
-    qtd=qtdNo(l);
-
-    printf("\n\n%d e quantidade", qtd);
-    while(aux!=NULL){
-        l2=insereNoInicio(l2, aux->valor);
+No* removerNo(No *l, int valor){
+    No* aux=l;
+    No* anterior=NULL;
+    while(aux->valor!=valor){
+        anterior=aux;
         aux=aux->prox;
     }
+
+    anterior->prox=aux->prox;
+    aux->prox=NULL;       
     
-    return l;
-}
-*/
-int main(){
-    No *l=NULL;
-    l= criaNo(8);
-
-    l=insereNoInicio(l,4);
-    l=insereNoInicio(l,6);
-    l=insereNoInicio(l,9);
-
-    mostrarLista(l);
-    if(minimum(l)==NULL) printf("\nNao ha numero minimo, todos elementos da lista sao iguais");
-    else printf("\n\nmenor: %d", minimum(l)->valor);
-
-    if(maximum(l)==NULL) printf("\nNao ha numero maximo, todos elementos da lista sao iguais");
-    else printf("\n\nmaior: %d", maximum(l)->valor);
-    
-    No *l2=NULL;
-    l2=reverseDuasListas(l);
-    printf("\n\nMostrar lista reverse\n");
-    mostrarLista(l2);
-    
-    int qtd=0;
-    qtd=qtdNo(l);
-    printf("\n%d e a quantidade de elementos", qtd);
-
-    destruirLista(l);
-    printf("\nLista1...");
-    destruirLista(l2);
-    printf("\nLista2...");
-
-    
-    return 0;
+    return aux;
 }
