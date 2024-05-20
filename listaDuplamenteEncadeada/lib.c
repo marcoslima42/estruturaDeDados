@@ -92,6 +92,11 @@ void imprimirLista(ListaD *l){
     }
 }
 
+void imprimirReverso(ListaD *l){
+    No *aux=l->fim;
+    if()
+}
+
 ListaD* liberarLista(ListaD *l){
     No *aux=l->inicio;
     int qtd=0; 
