@@ -20,6 +20,9 @@ int main(){
     free(removerNo(l,9));
     printf("\n\n");
     imprimirLista(l);
+
+    imprimirReverso(l);
+    
     l=liberarLista(l);
     imprimirLista(l);
     return 0;

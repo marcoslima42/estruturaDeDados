@@ -90,11 +90,15 @@ void imprimirLista(ListaD *l){
         printf("%d ", aux->valor);
         aux=aux->prox;
     }
+    printf("\n");
+
 }
 
-void imprimirReverso(ListaD *l){
-    No *aux=l->fim;
-    if()
+void imprimirReverso(ListaD *l)
+{
+    for(No* aux = l->fim; aux != NULL; aux = aux->ant)
+        printf("%d ", aux->valor);
+    printf("\n");
 }
 
 ListaD* liberarLista(ListaD *l){

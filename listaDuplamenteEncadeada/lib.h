@@ -25,6 +25,7 @@ ListaD *liberarLista(ListaD *l);
 No *removerNo(ListaD *l, int valor);
 No *buscar(ListaD *l, int valor);
 void inserirMeio(ListaD *l, int valorInserir, int valorBuscar);
+void imprimirReverso(ListaD *l);
 
 
 #endif
