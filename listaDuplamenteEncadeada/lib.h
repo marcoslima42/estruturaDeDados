@@ -14,6 +14,7 @@ typedef struct no No;
 struct listaD{
     No *inicio;
     No *fim;
+    int qtd;
 };
 typedef struct listaD ListaD;
 
@@ -26,6 +27,7 @@ No *removerNo(ListaD *l, int valor);
 No *buscar(ListaD *l, int valor);
 void inserirMeio(ListaD *l, int valorInserir, int valorBuscar);
 void imprimirReverso(ListaD *l);
-
+void bubbleSort(ListaD *l);
+int qtdLista(No*aux,int i);
 
 #endif

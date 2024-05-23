@@ -47,6 +47,17 @@ No *buscar(ListaD *l, int valor){
     return aux;
 }
 
+// void inserirOrdenado(ListaD *l, int valor){
+//     No *novo=criaNo(l, valor);
+//     if(l->inicio==NULL){
+//         l->inicio=novo;
+//         l->fim=novo;
+//     }
+//     if{
+
+//     }
+// }
+
 void inserirMeio(ListaD *l, int valorInserir, int valorBuscar){
     No *novo=criaNo(l, valorInserir);
     No *aux=buscar(l, valorBuscar);
@@ -101,6 +112,22 @@ void imprimirReverso(ListaD *l)
     printf("\n");
 }
 
+int qtdLista(No*aux,int i){
+    if(aux->prox!=NULL)
+        return i+=qtdLista(aux->prox,i);
+    else 
+        return i;  
+}
+
+// void reverterLista(ListaD *l){
+//     No *aux1=l->inicio, *aux2=l->fim;
+//     qtdLista(aux1,1);
+//     for(int i=0; i<l->qtd; i++){
+
+//     }
+
+// }
+
 ListaD* liberarLista(ListaD *l){
     No *aux=l->inicio;
     int qtd=0; 
@@ -113,6 +140,19 @@ ListaD* liberarLista(ListaD *l){
     }
     printf("\n\nlista destruida %d", qtd);
 
+    free(l);
     return NULL;
+}
+
+void bubbleSort(ListaD *l){
+    int aux=0;
+    
+    for(No *i=l->inicio; i!=NULL; i=i->prox)
+        for(No *j=i->prox; j!=NULL; j=j->prox)
+            if(i->valor>j->valor){
+                aux=i->valor;
+                i->valor=j->valor;
+                j->valor=aux;
+            }
 }
 
