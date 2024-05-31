@@ -83,7 +83,7 @@ No* insereNoFim(No *l, int valor){
     if(l==NULL)
         l=criaNo(valor);
     else{
-        while(aux!=NULL)
+        while(aux->prox!=NULL)
             aux=aux->prox;
         aux->prox=criaNo(valor);
     }
