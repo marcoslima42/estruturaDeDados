@@ -19,6 +19,8 @@ void destruirLista(No* l);
 int qtdNo(No *l);
 No* reverseDuasListas(No *l);
 No* removerNo(No *l, int valor);
+void reverse(No *l);
+
 
 int main(){
     No *l=NULL;
@@ -39,13 +41,18 @@ int main(){
     // l2=reverseDuasListas(l);
     // printf("\n\nMostrar lista reverse\n");
     // mostrarLista(l2);
-    No* aux=NULL;
-    mostrarLista(l);
-    aux=removerNo(l, 4);
-    printf("no removido %d", aux->valor);
-    free(aux);
-    
+    // No* aux=NULL;
+    // mostrarLista(l);
+    // aux=removerNo(l, 4);
+    // printf("no removido %d", aux->valor);
+    // free(aux);
     printf("\n");
+    mostrarLista(l);
+    
+    getch();
+    printf("\n");
+    printf("\nLista Reversa: \n");
+    reverse(l);
     mostrarLista(l);
     destruirLista(l);
     //printf("\nLista1...");
@@ -192,3 +199,32 @@ No* removerNo(No *l, int valor){
     
     return aux;
 }
+
+void reverse(No *l){
+    No *aux=NULL;
+    int copia=0;
+    int qtd=qtdNo(l), flag=0;  
+
+    printf(" o tanto de qtd %d",qtd);
+
+    if(qtd%2!=0)
+        flag=1;
+
+    for(int i=0; i<=qtd; i++){
+        aux=l;
+        for(int j=qtd-1; j!=0; j--){
+            copia=aux->valor;
+            aux->valor=aux->prox->valor;
+            aux->prox->valor=copia;
+            aux=aux->prox;
+        }
+        qtd--;
+    }
+
+    if(flag!=0){
+        copia=l->valor;
+        l->valor=l->prox->valor;
+        l->prox->valor=copia;
+    }
+}
+
