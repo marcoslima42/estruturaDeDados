@@ -20,46 +20,83 @@ typedef struct listaD ListaD;
 No *criaNo(ListaD *l, char valor);
 void inserirFim(ListaD *l, char valor);
 void imprimirLista(ListaD *l);
-void buscar(ListaD *l, char valor);
+ListaD *criarLista();
+void inputLista(ListaD *l);
+No *buscar(ListaD *l, char *seqPar);
+
 
 int main(){
-    ListaD *l1=NULL;
-    ListaD *l2=NULL;
+    ListaD *l1=criarLista(), *l2=criarLista();
+    char seqPar1[1000], seqPar2[1000];
+    int qtdPares=0;
+    No *auxUltimoNo1=NULL, *auxUltimoNo2=NULL;
 
-    l1=(ListaD*)malloc(sizeof(ListaD));
-    l1->inicio=l1->fim=NULL;
-    l2=(ListaD*)malloc(sizeof(ListaD));
-    l2->inicio=l2->fim=NULL;
+    inputLista(l1);
+    inputLista(l2);
+    scanf("%d", &qtdPares);
 
-    char vetor[100000];
-    char vetor2[100000];
-    char letra=' ';
-    
-    scanf("%s", vetor);
-    scanf("%s", vetor2);
-    
-    //cria primeira lista
-    for(int j=0; j<strlen(vetor); j++){
-        letra=vetor[j];
-        inserirFim(l1, letra);
+    for(int i=0; i<qtdPares; i++){
+        //entrando com a sequencia de pares, vetores de char
+        scanf("%s", seqPar1);
+        scanf("%s", seqPar2);
+        auxUltimoNo1=buscar(l1, seqPar1);
+        if(auxUltimoNo1!=NULL)
+            printf("\naux ultimo %c", auxUltimoNo1->valor);
+        else
+            printf("\naux ultimo e NULL");
     }
-    //cria segunda lista
-    for(int j=0; j<strlen(vetor2); j++){
-        letra=vetor2[j];
-        inserirFim(l2, letra);
-    }
-    int seq_qtd=0;
-    char gene1[100000], gene2[100000];
-
-    char vlr='a';
-
-    buscar(l1, vlr);
-    imprimirLista(l1);
-    imprimirLista(l2);
+    
+    // imprimirLista(l1);
+    // imprimirLista(l2);
     
     return 0; 
 }
 //fim main
+No *buscar(ListaD *l, char *seqPar){
+    int cont=0;
+    No *auxAtual=NULL;
+    //percorrer a lista e encontrar a sequencia
+    for(No *aux=l->inicio; aux->prox!=NULL; aux=aux->prox){
+        auxAtual=aux;
+        if(aux->valor == seqPar[0]){
+            for(int i=0; i<strlen(seqPar); i++){
+                if(aux->valor == seqPar[i]){
+                    // cont++;
+                    printf("\n\nigual %c", aux->valor);
+                    printf("\n\nigual prox %c", aux->prox->valor);
+                    printf("\n\nigual prox %c", aux->ant->valor);
+                    aux=aux->prox;
+                    
+                }
+            }
+            printf("\n\nterminou loop principal");
+            getch();
+            
+            if(cont==strlen(seqPar))
+                return aux;
+            else
+                aux=auxAtual;
+        }
+        aux=aux->prox;
+    }
+    return NULL;
+}
+void inputLista(ListaD *l){
+    char vetor[1000];
+    char letra=' ';
+    
+    scanf("%s", vetor);
+
+    for(int i=0; i<strlen(vetor); i++){
+        letra=vetor[i];
+        inserirFim(l, letra);
+    }
+}
+
+ListaD *criarLista(){
+    ListaD *l=(ListaD*)malloc(sizeof(ListaD));
+    l->inicio=l->fim=NULL;
+}
 
 No *criaNo(ListaD *l, char valor){
     No *novo=(No*)malloc(sizeof(No));
@@ -94,13 +131,4 @@ void imprimirLista(ListaD *l){
     }
     printf("\n");
 
-}
-
-void buscar(ListaD *l, char valor){
-    No *aux=l->inicio;
-
-    while(aux->valor!=valor && aux->prox!=NULL)
-        aux=aux->prox;
-    
-    printf("\n encontrei o %c", aux->valor);
 }
