@@ -34,24 +34,27 @@ int main(){
     No *auxUltimoNo1=NULL, *auxUltimoNo2=NULL;
 
     inputLista(l1);
-    inputLista(l2);
-    scanf("%d", &qtdPares);
+    //inputLista(l2);
+    // scanf("%d", &qtdPares);
 
-    for(int i=0; i<qtdPares; i++){
-        //entrando com a sequencia de pares, vetores de char
-        scanf("%s", seqPar1);
-        scanf("%s", seqPar2);
-        auxUltimoNo1=buscar(l1, seqPar1);
-        adicionar(l1, auxUltimoNo1, seqPar2);
+    // for(int i=0; i<qtdPares; i++){
+    //     //entrando com a sequencia de pares, vetores de char
+    //     scanf("%s", seqPar1);
+    //     scanf("%s", seqPar2);
+    //     auxUltimoNo1=buscar(l1, seqPar1);
+    //     adicionar(l1, auxUltimoNo1, seqPar2);
 
-        printf("\n");
-        imprimirLista(l1);
-        printf("\n");
-        imprimirLista(l2);
-        //remover
-        // printf("o ultimo foi '%c' ", auxUltimoNo1->prox->valor);
+    //     printf("\n");
+    //     imprimirLista(l1);
+    //     printf("\n");
+    //     imprimirLista(l2);
+    //     //remover
+    //     // printf("o ultimo foi '%c' ", auxUltimoNo1->prox->valor);
 
-    }
+    // }
+    
+    scanf("%s", &seqPar1);
+    auxUltimoNo1=buscar(l1, seqPar1);
     
     // imprimirLista(l1);
     // imprimirLista(l2);
