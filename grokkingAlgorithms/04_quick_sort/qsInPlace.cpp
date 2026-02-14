@@ -7,15 +7,15 @@ void quickSort(vector<int> &list, int begin, int end){
     int j = begin;
     int i = begin - 1;
 
-    if(begin < i || end == begin){ //base case
+    if(begin >= end){ //base case
         return;
     }
     else{ //recursive case, breaking the problem
-        pivot = list[0];
+        pivot = end;
         
-        for(j; j < end; j++){
+        for(j; j <= end; j++){
             
-            if(list[j] <= pivot){
+            if(list[j] <= list[pivot]){
                 i++;
 
                 if(j > i){
@@ -24,14 +24,14 @@ void quickSort(vector<int> &list, int begin, int end){
             }
         }
 
-        quickSort(list, 0, i-1);
-        quickSort(list, 0, i+1);
+        quickSort(list, begin, i-1); // left
+        quickSort(list, i+1, end);  // right
     }
 }
 
 int main(){
 
-    vector<int> list = {8, 6, 1, 3, 2};//{3, 2, 0, 1, 5, 4, 22, 11, 7}; //{3, 3, 3, 2, 1};
+    vector<int> list = {3, 3, 3, 2, 1}; //{8, 6, 1, 3, 2};//{3, 2, 0, 1, 5, 4, 22, 11, 7}; 
 
     cout << "BEFORE QUICKSORT: \n";
     for(int x : list)   cout << x << " ";
